@@ -1,0 +1,70 @@
+Given a string s, reverse only all the vowels in the string and return it.
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+Example 1:
+Input: s = "IceCreAm"
+Output: "AceCreIm"
+Explanation:
+The vowels in s are ['I', 'e', 'e', 'A']. On reversing the vowels, s becomes "AceCreIm".
+
+Example 2:
+Input: s = "leetcode"
+Output: "leotcede"
+
+class Solution {
+    public String reverseVowels(String s) {
+        StringBuilder newStr = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'){
+                newStr.append(ch);
+            }
+        }
+
+        int k= newStr.length()-1;
+        StringBuilder str = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U'){
+                str.append(newStr.charAt(k--));
+            }
+            else{
+                str.append(ch);
+            }
+        }
+        return str.toString();
+    }
+}
+TC = O(n)
+SC = O(n) + O(n)
+
+OPTIMISED Approach : use two pointer
+class Solution {
+    public String reverseVowels(String s) {
+        char[] chars = s.toCharArray();
+        int left = 0, right = s.length() - 1;
+
+        while (left < right) {
+            // Move left pointer to the next vowel
+            while (left < right && !isVowel(chars[left])) {
+                left++;
+            }
+
+            // Move right pointer to the previous vowel
+            while (left < right && !isVowel(chars[right])) {
+                right--;
+            }
+
+            // Swap the vowels
+            char temp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = temp;
+
+            left++;
+            right--;
+        }
+
+        return new String(chars);
+    }
+}
+TC = O(n)
+SC = O(1)
